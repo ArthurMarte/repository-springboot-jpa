@@ -3,21 +3,25 @@ package com.arthur.store.models;
 import java.io.Serializable;
 import java.time.Instant;
 
+import com.arthur.store.models.enums.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 
 @Entity
@@ -30,32 +34,25 @@ public class Order implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @JsonFormat (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant moment;
 
     @ManyToOne
     @JoinColumn(name = "CLIENT_ID")
+    @JsonBackReference // Ignora a serialização do lado "muitos" (Order) e evita o loop
     private User client;
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + (int) (id ^ (id >>> 32));
-        return result;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus;
+
+
+    // Construtor sem o 'id', que é gerado automaticamente pelo JPA
+    public Order(Instant moment, User client, OrderStatus orderStatus) {
+        this.moment = moment;
+        this.client = client;
+        this.orderStatus = orderStatus;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Order other = (Order) obj;
-        if (id != other.id)
-            return false;
-        return true;
-    }
-
+    
+    
 }

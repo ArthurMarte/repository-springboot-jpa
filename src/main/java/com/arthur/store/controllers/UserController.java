@@ -20,13 +20,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/list")
+    @GetMapping("/user")
     public ResponseEntity<List<User>> listAllUsers () {
         return ResponseEntity.status(HttpStatus.OK).body(userService.listAllUsers());
     }
 
 
-    @GetMapping("/list/{id}")
+    @GetMapping("/user/{id}")
     public ResponseEntity<User> listUserById (@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.getUserById(id));
     }
