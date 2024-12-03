@@ -1,53 +1,40 @@
 package com.arthur.store.models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.Instant;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-//utilizando o Lombok para gerar os getters, setters e constructors
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 
 @Entity
-@Table (name = "TB_USER")
-public class User implements Serializable{
+@Table(name = "TB_ORDER")
+public class Order implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-    private String name;
-    private String email;
-    private String phone;
-    private String password;
+    private Instant moment;
 
-    @OneToMany (mappedBy = "client")
-    private List<Order> orders = new ArrayList<>();// relacionamento com a tabela TB_ORDER
-
-
-    // Construtor sem o 'id', que é gerado automaticamente pelo JPA
-    public User(String name, String email, String phone, String password) {
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.password = password;
-    }
-
+    @ManyToOne
+    @JoinColumn(name = "CLIENT_ID")
+    private User client;
 
     @Override
     public int hashCode() {
@@ -65,7 +52,7 @@ public class User implements Serializable{
             return false;
         if (getClass() != obj.getClass())
             return false;
-        User other = (User) obj;
+        Order other = (Order) obj;
         if (id != other.id)
             return false;
         return true;
