@@ -19,21 +19,31 @@ import lombok.Setter;
 @NoArgsConstructor
 
 @Entity
-@Table(name = "TB_CATEGORY")
-public class Category implements Serializable {
+@Table(name = "TB_PRODUCTS")
+public class Products implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
+
     private String name;
+    private String description;
+    private double price;
+    private String imgUrl;
 
     @Transient
-    private Set<Products> product = new HashSet<>();
+    private Set<Category> categories = new HashSet<>(); // garante que a coleção comece vazia mas não nula
 
-    // Construtor sem o 'id', que é gerado automaticamente pelo JPA
-    public Category(String name) {
+
+    public Products(String name, String description, double price, String imgUrl) {
         this.name = name;
+        this.description = description;
+        this.price = price;
+        this.imgUrl = imgUrl;
     }
+
+
 
 }

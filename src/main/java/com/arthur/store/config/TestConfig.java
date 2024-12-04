@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.arthur.store.models.Category;
 import com.arthur.store.models.Order;
+import com.arthur.store.models.Products;
 import com.arthur.store.models.User;
 import com.arthur.store.models.enums.OrderStatus;
 import com.arthur.store.repositories.CategoryRepository;
 import com.arthur.store.repositories.OrderRepository;
+import com.arthur.store.repositories.ProductsRepository;
 import com.arthur.store.repositories.UserRepository;
 
 
@@ -32,6 +34,9 @@ public class TestConfig implements CommandLineRunner{
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private ProductsRepository productsRepository;
+
 
     //tudo que colocar dentro do método run será executado quando a aplicação for iniciada
     @Override
@@ -47,9 +52,18 @@ public class TestConfig implements CommandLineRunner{
         Category cat2 = new Category("Books");
         Category cat3 = new Category("Computers"); 
 
+
+        Products p1 = new Products("The Lord of the Rings", "Lorem ipsum dolor sit amet, consectetur.", 90.5, "");
+        Products p2 = new Products("Smart TV", "Nulla eu imperdiet purus. Maecenas ante.", 2190.0, "");
+        Products p3 = new Products("Macbook Pro", "Nam eleifend maximus tortor, at mollis.", 1250.0, "");
+        Products p4 = new Products("PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, "");
+        Products p5 = new Products("Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, ""); 
+
+
         userRepository.saveAll(Arrays.asList(u1, u2));
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
         categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
+        productsRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
     }
     
 }
