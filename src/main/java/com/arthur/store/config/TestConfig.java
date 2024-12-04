@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.arthur.store.models.Category;
 import com.arthur.store.models.Order;
 import com.arthur.store.models.OrderItem;
+import com.arthur.store.models.Payment;
 import com.arthur.store.models.Products;
 import com.arthur.store.models.User;
 import com.arthur.store.models.enums.OrderStatus;
@@ -86,6 +87,15 @@ public class TestConfig implements CommandLineRunner{
         OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
 
         orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
+
+
+        Payment pay1 = new Payment(Instant.parse("2019-06-20T21:53:07Z"), o1);
+        o1.setPayment(pay1); //associa meu pedido 1 ao pagamento pay 1
+        orderRepository.save(o1);
+
+        Payment pay2 = new Payment(Instant.parse(("2019-07-22T17:21:22Z")), o3); 
+        o3.setPayment(pay2); //associa meu pedido 3 ao pagamento pay
+        orderRepository.save(o3);
     }
     
 }

@@ -42,4 +42,8 @@ public class OrderItem implements Serializable{
     public Order getOrder(){
         return id.getOrder();
     }
+
+    public Products getProduct(){
+        return id.getProduct();
+    }
 }

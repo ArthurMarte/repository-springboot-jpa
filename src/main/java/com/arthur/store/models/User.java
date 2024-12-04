@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,7 +37,8 @@ public class User implements Serializable{
     private String password;
 
     @OneToMany (mappedBy = "client")
-    @JsonManagedReference // Esta anotação gerencia a serialização do lado "1" (User)
+    //@JsonManagedReference // Esta anotação gerencia a serialização do lado "1" (User)
+    @JsonIgnoreProperties("client") // Ignora a serialização do campo 'client' dentro da ordem para evitar o loop
     private List<Order> orders = new ArrayList<>();// relacionamento com a tabela TB_ORDER
 
 
